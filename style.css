@@ -1,0 +1,947 @@
+/* ==========================================================================
+   GitSim Global Premium Stylesheet (Vanilla CSS)
+   ========================================================================== */
+
+:root {
+    /* Color Palette */
+    --bg-primary: hsl(222, 25%, 8%);
+    --bg-secondary: hsl(222, 20%, 12%);
+    --bg-card: hsla(222, 20%, 15%, 0.6);
+    --border-color: hsla(222, 15%, 25%, 0.4);
+    --text-primary: hsl(210, 20%, 95%);
+    --text-secondary: hsl(210, 15%, 70%);
+    --text-muted: hsl(210, 10%, 50%);
+
+    /* Accent & Status Colors */
+    --accent-blue: hsl(198, 93%, 60%);
+    --accent-blue-glow: hsla(198, 93%, 60%, 0.2);
+    --accent-green: hsl(145, 75%, 45%);
+    --accent-green-glow: hsla(145, 75%, 45%, 0.2);
+    --accent-red: hsl(355, 75%, 55%);
+    --accent-red-glow: hsla(355, 75%, 55%, 0.2);
+    --accent-yellow: hsl(45, 85%, 50%);
+    --accent-yellow-glow: hsla(45, 85%, 50%, 0.2);
+
+    /* Fonts */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Transition & Radius */
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base Setup */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+/* App Layout Grid */
+.app-container {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    height: 100vh;
+    padding: 16px;
+    gap: 16px;
+}
+
+/* Glassmorphism card utility */
+.glass {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border-radius: var(--radius-lg);
+}
+
+/* 1. Left Sidebar: Scenario Panel */
+.scenario-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Custom Scrollbar for Sidebar */
+.scenario-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.scenario-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scenario-panel::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.panel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 0 8px var(--accent-blue));
+}
+
+.logo h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.progress-bar-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+}
+
+.progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress-track {
+    background: hsla(222, 10%, 20%, 0.8);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+    width: 0%;
+    height: 100%;
+    border-radius: 3px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 0 10px var(--accent-blue-glow);
+}
+
+/* Mission Card */
+.mission-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.mission-badge {
+    background: var(--accent-blue-glow);
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 20px;
+    width: fit-content;
+    letter-spacing: 1px;
+}
+
+.mission-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mission-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.mission-todo {
+    background: hsla(222, 10%, 8%, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px;
+}
+
+.mission-todo h3 {
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.mission-todo ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mission-todo li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+
+.mission-todo li.done {
+    color: var(--accent-green);
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+.mission-todo li.done::before {
+    content: "✓";
+    font-weight: 700;
+    color: var(--accent-green);
+}
+
+.mission-todo li:not(.done)::before {
+    content: "○";
+    color: var(--text-muted);
+}
+
+.hint-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hint-text {
+    background: hsla(45, 85%, 50%, 0.1);
+    border: 1px dashed var(--accent-yellow);
+    color: var(--accent-yellow);
+    padding: 10px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Levels Quick Access */
+.levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.levels-container h3 {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.level-nodes {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.level-nodes::-webkit-scrollbar {
+    height: 4px;
+}
+.level-nodes::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.level-btn {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.level-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+.level-btn.active {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: var(--bg-primary);
+    box-shadow: 0 0 12px var(--accent-blue-glow);
+}
+
+.level-btn.completed {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    background: var(--accent-green-glow);
+}
+
+/* Summary Card */
+.summary-card {
+    padding: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--accent-yellow);
+}
+
+/* Buttons */
+button {
+    font-family: var(--font-sans);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: var(--bg-primary);
+}
+.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.btn-accent {
+    background-color: var(--accent-green);
+    color: var(--bg-primary);
+    font-weight: 600;
+}
+.btn-accent:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px var(--accent-green-glow);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 11px;
+}
+
+.btn-secondary.btn-sm {
+    padding: 6px 10px;
+}
+
+/* 2. Right Workspace Panel */
+.workspace-panel {
+    display: grid;
+    grid-template-rows: 1fr 280px;
+    gap: 16px;
+    height: 100%;
+}
+
+/* Tab visualizer header styling */
+.visualizer-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-tab-bar {
+    display: flex;
+    background: hsla(222, 15%, 8%, 0.8);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 12px 0 12px;
+    gap: 6px;
+}
+
+.tab-btn {
+    background: transparent;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Explorer Grid view */
+.explorer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    padding: 16px;
+    gap: 16px;
+    overflow: hidden;
+}
+
+.file-tree-container, .staging-container {
+    display: flex;
+    flex-direction: column;
+    background: hsla(222, 10%, 5%, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    overflow: hidden;
+}
+
+h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.path-badge {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    width: fit-content;
+    margin-bottom: 12px;
+}
+
+.file-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Simulated File Cards */
+.file-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    transition: var(--transition-smooth);
+}
+
+.file-item:hover {
+    border-color: var(--accent-blue-glow);
+    transform: translateX(2px);
+}
+
+.file-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-icon {
+    font-size: 16px;
+}
+
+.file-name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.file-status-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* Status colors */
+.status-untracked {
+    background: var(--accent-red-glow);
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
+}
+
+.status-staged {
+    background: var(--accent-green-glow);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+}
+
+.status-committed {
+    background: var(--accent-blue-glow);
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.status-modified {
+    background: var(--accent-yellow-glow);
+    border: 1px solid var(--accent-yellow);
+    color: var(--accent-yellow);
+}
+
+.file-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+/* Staging box */
+.staging-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+    background: hsla(222, 10%, 3%, 0.5);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.staging-box.has-items {
+    justify-content: flex-start;
+    align-items: stretch;
+    border-style: solid;
+}
+
+.empty-placeholder {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 240px;
+    line-height: 1.6;
+}
+
+/* Commit Tree Graph tab */
+.git-tree-canvas-container {
+    height: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.git-tree-graph {
+    flex: 1;
+    background: hsla(222, 15%, 5%, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graph-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.commit-nodes-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    overflow-y: auto;
+    align-items: center;
+}
+
+/* Git Commit Node visual styling */
+.commit-node {
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent-blue);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 3;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.commit-node::after {
+    content: "";
+    position: absolute;
+    bottom: -40px;
+    left: 20px;
+    width: 2px;
+    height: 40px;
+    background: var(--accent-blue);
+    z-index: 0;
+}
+
+.commit-node:last-child::after {
+    display: none;
+}
+
+.commit-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    box-shadow: 0 0 10px var(--accent-blue);
+}
+
+.commit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.commit-hash {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent-blue);
+}
+
+.commit-msg {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.commit-author {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+/* 3. Terminal Emulator Panel */
+.terminal-container {
+    background: hsl(222, 30%, 4%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: hsl(222, 20%, 8%);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.red { background-color: #ff5f56; }
+.dot.yellow { background-color: #ffbd2e; }
+.dot.green { background-color: #27c93f; }
+
+.terminal-title {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+}
+
+.terminal-status {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--accent-green);
+    background: var(--accent-green-glow);
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.terminal-body {
+    flex: 1;
+    padding: 14px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    line-height: 1.6;
+}
+
+.terminal-output {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-prompt {
+    color: var(--accent-green);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    flex: 1;
+    caret-color: var(--accent-green);
+}
+
+/* Terminal Line Output styles */
+.output-command {
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.output-text {
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.output-error {
+    color: var(--accent-red);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.output-success {
+    color: var(--accent-green);
+    white-space: pre-wrap;
+}
+
+.system-welcome {
+    color: var(--accent-blue);
+    font-weight: 500;
+    border-left: 2px solid var(--accent-blue);
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+
+/* Modal overlays and congratulatory popups */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-modal {
+    width: 440px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.modal-icon {
+    font-size: 52px;
+    filter: drop-shadow(0 0 10px var(--accent-yellow));
+}
+
+.clear-modal h2 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-yellow), var(--accent-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.clear-modal p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.clear-modal button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    border-radius: var(--radius-md);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pop {
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Campaign Selector Dropdown */
+.campaign-selector-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.campaign-selector-container label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+#campaign-select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--accent-blue);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    width: 100%;
+}
+
+#campaign-select:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px var(--accent-blue-glow);
+}
+
+#campaign-select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Status Ignored */
+.status-ignored {
+    background: hsla(210, 10%, 40%, 0.15);
+    border: 1px dashed var(--text-muted);
+    color: var(--text-muted);
+}
+
+.file-item.ignored {
+    opacity: 0.5;
+    background: hsla(210, 10%, 10%, 0.3);
+    border: 1px dashed var(--border-color);
+}
+
+.file-item.ignored:hover {
+    transform: none;
+    border-color: var(--border-color);
+}
+
+.file-item.ignored .file-name {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}

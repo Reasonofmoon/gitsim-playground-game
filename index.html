@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostGitSim - 우체국 택배로 배우는 대화형 Git 시뮬레이터</title>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 1. 좌측 시나리오 안내 패널 -->
+        <aside class="scenario-panel">
+            <div class="panel-header">
+                <div class="logo">
+                    <span class="logo-icon">📮</span>
+                    <h1>PostGitSim</h1>
+                </div>
+                <div class="campaign-selector-container">
+                    <label for="campaign-select">🎯 학습 코스 선택:</label>
+                    <select id="campaign-select" class="glass">
+                        <option value="colab">캠페인 1: 우체국 취급점 개설과 기본 택배 (기본)</option>
+                        <option value="security">캠페인 2: 잘못 설치된 취급점 & 금지 대장 (고급)</option>
+                    </select>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">물류 마스터 진척도: <span id="progress-percent">0%</span></div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 미션 안내 카드 -->
+            <div class="mission-card glass">
+                <div class="mission-badge" id="mission-level">LEVEL 1</div>
+                <h2 class="mission-title" id="mission-title">내 방에 우체국 취급점 개설하기 (git init)</h2>
+                <p class="mission-description" id="mission-description">
+                    내 방에 우체국 민간 취급점 1호점을 내걸고 비밀 창고(.git)를 마련해 봅니다.
+                </p>
+                <div class="mission-todo">
+                    <h3>🎯 물류 접수 미션:</h3>
+                    <ul id="mission-checklist">
+                        <!-- 동적으로 체크리스트 로드 -->
+                    </ul>
+                </div>
+                <div class="hint-container">
+                    <button class="btn-secondary" id="btn-hint">💡 힌트 보기</button>
+                    <div class="hint-text hidden" id="hint-text">
+                        `git init -b main` 명령어를 터미널에 입력해 보세요!
+                    </div>
+                </div>
+            </div>
+
+            <!-- 레벨 퀵 링크 -->
+            <div class="levels-container">
+                <h3>미션 대장 (Missions)</h3>
+                <div class="level-nodes" id="level-nodes">
+                    <!-- 레벨 노드 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 핵심 개념 요약 미니 카드 -->
+            <div class="summary-card glass">
+                <div class="summary-header">
+                    <span>💡 우체국 꿀팁</span>
+                </div>
+                <p id="summary-content">
+                    `git init`은 내 방 폴더에 우체국 취급점 간판을 다는 행위입니다. `-b main` 옵션은 창고 보관 선반의 이름을 `main`으로 짓겠다는 의미입니다.
+                </p>
+            </div>
+        </aside>
+
+        <!-- 2. 우측 작업 영역 (상단: 시각화 패널, 하단: 터미널) -->
+        <main class="workspace-panel">
+            <!-- 우측 상단: 시각화 패널 -->
+            <section class="visualizer-container glass">
+                <div class="panel-tab-bar">
+                    <button class="tab-btn active" data-tab="explorer">📂 내 방 작업실 (Working Tree)</button>
+                    <button class="tab-btn" data-tab="git-tree">📦 선반 보관 노선 (Commit Graph)</button>
+                </div>
+
+                <div class="tab-content active" id="explorer-tab">
+                    <div class="explorer-grid">
+                        <!-- 가상 파일 시스템 트리 -->
+                        <div class="file-tree-container">
+                            <h4>📂 내 방 작업실 (Working Directory)</h4>
+                            <div class="path-badge">/content/test</div>
+                            <ul class="file-list" id="file-list">
+                                <!-- 파일 목록 동적 로드 -->
+                            </ul>
+                            <div class="file-actions">
+                                <button class="btn-primary btn-sm" id="btn-create-readme2">➕ README2.md 생성</button>
+                                <button class="btn-primary btn-sm hidden" id="btn-create-readme">➕ README.md 생성</button>
+                                <button class="btn-accent btn-sm hidden" id="btn-modify-readme">✏️ README.md 수정</button>
+                                <button class="btn-primary btn-sm hidden" id="btn-create-gitignore">➕ .gitignore 생성</button>
+                                <button class="btn-primary btn-sm hidden" id="btn-create-secret">➕ secret.txt 생성</button>
+                                <button class="btn-primary btn-sm hidden" id="btn-create-nodemodules">➕ node_modules/ 생성</button>
+                            </div>
+                        </div>
+
+                        <!-- 준비 영역 상태 -->
+                        <div class="staging-container">
+                            <h4>🟢 접수 대기 테이블 (Staging Area)</h4>
+                            <div class="staging-box" id="staging-box">
+                                <div class="empty-placeholder">대기 테이블에 물건이 없습니다. `git add` 명령으로 박스를 대기 테이블에 올리거나 파일 생성 버튼을 통해 담아주세요!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="git-tree-tab">
+                    <div class="git-tree-canvas-container">
+                        <h4>📦 창고 내 보관 노선 / 선반 (Commit History)</h4>
+                        <div class="git-tree-graph" id="git-tree-graph">
+                            <!-- SVG 또는 DOM 노드로 그려진 커밋 트리 -->
+                            <div class="empty-placeholder" id="git-tree-placeholder">아직 접수된 택배 박스가 없습니다. 첫 운송장을 발행하여 창고에 보관해 보세요!</div>
+                            <svg class="graph-svg" id="graph-svg"></svg>
+                            <div class="commit-nodes-layer" id="commit-nodes-layer"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 우측 하단: 터미널 패널 -->
+            <section class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="terminal-title">bash - post_git_post_office_terminal</div>
+                    <div class="terminal-status">CONNECTED</div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <!-- 명령어 이력 출력 영역 -->
+                    <div class="terminal-output" id="terminal-output">
+                        <div class="output-line system-welcome">
+                            Welcome to PostGitSim Interactive Terminal v1.2.0<br>
+                            이곳은 우체국 장부실입니다. 명령어를 직접 입력해 물류 배송 상태를 제어해 보세요!
+                        </div>
+                    </div>
+                    <!-- 입력 라인 -->
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt" id="terminal-prompt">guest@postgitsim:~$</span>
+                        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 미션 클리어 모달 축하 이펙트 -->
+    <div class="modal-overlay hidden" id="modal-overlay">
+        <div class="clear-modal glass animate-pop">
+            <div class="modal-icon">📦</div>
+            <h2>MISSION CLEAR!</h2>
+            <p id="modal-message">축하합니다! 성공적으로 택배 박스를 영구 적재했습니다.</p>
+            <button class="btn-accent" id="btn-next-level">다음 단계로 이동하기 ➡️</button>
+        </div>
+    </div>
+
+    <!-- 스크립트 모듈 연동 -->
+    <script type="module" src="gitEngine.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
